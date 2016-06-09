@@ -31,7 +31,7 @@
 unsigned char volatile update = 0;
 
 void TIM2_UPD_OVF_IRQHandler(void) __interrupt(13) {
-    update = 1;
+	update = 1;
 	TIM2_SR1 = 0;
 }
 
@@ -43,9 +43,9 @@ main() {
 	// Duty cycle LUT, starts at 50% and goes up to 100%
 	const unsigned char duty_lut[6] = { 0, 0x80, 0xA0, 0xC0, 0xE0, 0xFF };
     
-    CLK_CKDIVR = 1 << 3;	// fCPU = 16MHz/2 = 8MHz
+	CLK_CKDIVR = 1 << 3;	// fCPU = 16MHz/2 = 8MHz
 
-    PC_CR1 |= 0x18;			// Pull-ups for buttons
+	PC_CR1 |= 0x18;			// Pull-ups for buttons
 
 	// TIM1 is used for PWM generation
 	TIM1_ARRH = 0x01;		// Reload = 0x100
