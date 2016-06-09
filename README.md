@@ -29,7 +29,7 @@ Connect a SWIM programmer (they're around $4 on eBay) to the annotated points.
 
 Start STVP, select STLINK as the programmer and STM8S003F3 as the device.
 
-Go in the OPTION BYTE tab, make sure ROP is set to OFF and hit program, this will reset the protection and wipe the original firmware.
+Go in the OPTION BYTE tab. Make sure ROP is set to OFF and AFR0 to "Port C6 Alternate Function". Hit program, this will reset the protection and wipe the original firmware.
 
 Back in the PROGRAM MEMORY tab, load main.ihx and hit program.
 
@@ -37,7 +37,6 @@ Back in the PROGRAM MEMORY tab, load main.ihx and hit program.
 Individually, the "+" and "-" buttons work the same way.
 
 The speed steps should also be the same as the original ones.
-
 
 Keeping both the "+" and "-" buttons pushed at the same time for more than a second will toggle between the regular mode, and the analog-in mode.
 
