@@ -17,26 +17,26 @@ The motor should come loose out of the casing.
 ## Adding the input
 Follow this schematic:
 
-![Schematic](/schematic.png)
+![Schematic](docs/schematic.png)
 
 Where JACK is the signal pin of a 3.5mm jack socket, and AIN the analog input pin on the STM8 (pin #2, "PD5/AIN5"). R1 and R2 must be the same value and above 10k.
 
 I made the circuit with 1206 SMDs, but there's plenty of space for trough-hole components.
 
-![Schematic](/smdcircuit.jpg)
+![Schematic](docs/smdcircuit.jpg)
 
 I took the +5V from the regulator (U2), and ground from C13.
 
 I fitted the jack socket next to the power cable, wrapped it in 2 layers of shrink tubing and hot-glued the wires to the casing to avoid any potential shorts with the mains voltage (**you DON'T want that**).
 
-![Schematic](/plug.jpg) ![Schematic](/plug2.jpg)
+![Schematic](docs/plug.jpg) ![Schematic](docs/plug2.jpg)
 
 The long wires do pick up some noise, but it's completly cancelled out by the firmware. Shielded audio cable isn't required.
 
 ## Programming
 Locate the 4 programming points on the underside of the PCB:
 
-![EMW](/pcb.jpg)
+![EMW](docs/pcb.jpg)
 
 Connect a SWIM programmer (they're around $4 on eBay) to the annotated points.
 Start STVP, select STLINK as the programmer and STM8S003F3 as the device.
