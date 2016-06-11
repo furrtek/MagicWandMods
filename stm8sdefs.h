@@ -18,3 +18,7 @@
 #define TIM2_PSCR	(*(volatile unsigned char *)0x530E)
 #define TIM2_ARRH	(*(volatile unsigned char *)0x530F)
 #define TIM2_ARRL	(*(volatile unsigned char *)0x5310)
+
+#define ADC_CSR		(*(volatile unsigned char *)0x5400)
+#define ADC_CR1		(*(volatile unsigned char *)0x5401)
+#define ADC_DRH		(*(volatile unsigned char *)0x5404)
