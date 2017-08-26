@@ -1,5 +1,7 @@
 # EMWAnalog
-Analog-in (CV) firmware mod for the "Europe Magic Wand".
+Analog-in firmware and hardware mod for the "Europe Magic Wand", a quality Hitachi Magic Wand clone.
+
+This mod allows you to control the motor's speed with the envelope of an audio signal, through a regular 3.5mm jack plug.
 
 ## Teardown
 Be sure to unplug the EMW and wait a few minutes before taking it apart.
