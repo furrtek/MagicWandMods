@@ -1,10 +1,11 @@
-# EMWAnalog
-Analog-in firmware and hardware mod for the "Europe Magic Wand", a quality Hitachi Magic Wand clone.
+# MagicWandMods
+Hardware and firmware mods for the "Europe Magic Wand", a quality Hitachi Magic Wand clone.
 
-This mod allows you to control the motor's speed with the envelope of an audio signal, through a regular 3.5mm jack plug.
+* Analog-in (CV): control by audio signal amplitude
+* Serial: control by serial port
 
 ## Teardown
-Be sure to unplug the EMW and wait a few minutes before taking it apart.
+Be sure to unplug the EMW and wait a few minutes for the high-voltage capacitor to safely discharge before taking it apart.
 
 The EMW is held together by 3 big phillips screws:
 * On the back, close to the power cable, hidden by a plastic plug (hard to pull).
@@ -16,12 +17,12 @@ The PCB needs to be pulled out with a bit of effort because of the silicone join
 **Be careful about the flex cable** going to the buttons on the back of the PCB, gently lift the black part of the connector to release it.
 The motor should come loose out of the casing.
 
-## Adding the input
+## Analog-in mod
 Follow this schematic:
 
 ![Schematic](docs/schematic.png)
 
-Where JACK is the signal pin of a 3.5mm jack socket, and AIN the analog input pin on the STM8 (pin #2, "PD5/AIN5"). R1 and R2 must be the same value and above 10k.
+"AIN" is the analog input pin on the STM8 (pin #2, "PD5/AIN5"). R1 and R2 must be the same value and above 10k.
 
 I made the circuit with 1206 SMDs, but there's plenty of space for trough-hole components.
 
@@ -29,22 +30,35 @@ I made the circuit with 1206 SMDs, but there's plenty of space for trough-hole c
 
 I took the +5V from the regulator (U2), and ground from C13.
 
-I fitted the jack socket next to the power cable, wrapped it in 2 layers of shrink tubing and hot-glued the wires to the casing to avoid any potential shorts with the mains voltage (**you DON'T want that**).
+The wires can pick up some noise from the power supply circuit and the motor, but it's completly cancelled out by the firmware. Shielded audio cable isn't required.
+
+## Serial mod
+
+Solder two wires: one to ground and one to the STM8 pin #3 ("UART1_RX/PD6"). No need to add any components.
+
+## External connection
+
+Fit a 3.5mm jack socket next to the power cable, wrap it in 2 layers of heat-shrink tubing and hot-glue the wires to the casing to avoid any potential shorts with the mains voltage (**you DON'T want that**).
 
 ![Schematic](docs/plug.jpg) ![Schematic](docs/plug2.jpg)
 
-The long wires do pick up some noise, but it's completly cancelled out by the firmware. Shielded audio cable isn't required.
+Connect the sleeve pin to the ground wire, and the tip (+ ring if you used a stereo cable) to the signal wire.
 
 ## Programming
-Locate the 4 programming points on the underside of the PCB:
+
+Locate the 4 programming points on the PCB:
 
 ![EMW](docs/pcb.jpg)
 
 Connect a SWIM programmer (they're around $4 on eBay) to the annotated points.
+Plug in the EMW. Be careful not to touch the PCB from now on !
+Get ST Visual Programmer from ![https://www.st.com/en/development-tools/stvp-stm8.html](st.com).
 Start STVP, select STLINK as the programmer and STM8S003F3 as the device.
-Go in the OPTION BYTE tab. Make sure ROP is set to OFF and AFR0 to "Port C6 Alternate Function". Hit program, this will reset the protection and wipe the original firmware.
+Go in the OPTION BYTE tab. Make sure ROP is set to OFF, and AFR0 to "Port C6 Alternate Function".
+Hit program, this will reset the protection and wipe the original firmware.
 
-Back in the PROGRAM MEMORY tab, load main.ihx and hit program.
+Back in the PROGRAM MEMORY tab, load the appropriate main.ihx file and hit program.
+Disconnect the programmer, unplug the EMW, wait a bit, plug it back in. The new firmware should now be running.
 
 ## Usage
 Individually, the "+" and "-" buttons work the same way.

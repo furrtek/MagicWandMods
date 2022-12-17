@@ -1,0 +1,12 @@
+
+*.lk
+*.lst
+*.map
+*.rel
+*.rst
+*.sym
+*.cdb
+fw_analog/stvp.hex
+fw_serial/stvp.hex
+fw_serial/main.asm
+fw_analog/main.asm
