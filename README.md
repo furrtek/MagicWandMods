@@ -82,5 +82,5 @@ Locate the 4 programming points on the PCB:
 * Disconnect the programmer, unplug the EMW, wait a bit, plug it back in. The new firmware should now be running.
 
 ## Disclaimer
-I'm not responsible if you fuck everything up and/or die. Be careful, this isn't your mom's dishwasher.
+I'm not responsible if you fuck everything up and/or die. Be careful, there's exposed mains voltage inside the thing.
 This wasn't tested on animals (yet).
