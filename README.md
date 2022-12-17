@@ -32,9 +32,31 @@ I took the +5V from the regulator (U2), and ground from C13.
 
 The wires can pick up some noise from the power supply circuit and the motor, but it's completly cancelled out by the firmware. Shielded audio cable isn't required.
 
-## Serial mod
+### Usage
+Individually, the "+" and "-" buttons work the same way.
+The speed steps are the same as the original ones.
 
+Keeping both the "+" and "-" buttons pushed at the same time will toggle between the regular mode, and the analog-in mode.
+In the analog-in mode, the motor speed is multiplied by the amplitude of the input signal (so the speed adjustment and "off" speed still works).
+
+## Serial mod
 Solder two wires: one to ground and one to the STM8 pin #3 ("UART1_RX/PD6"). No need to add any components.
+
+### Usage
+Individually, the "+" and "-" buttons work the same way.
+The speed steps are the same as the original ones.
+
+Keeping both the "+" and "-" buttons pushed at the same time will toggle between the regular mode (one beep), and the serial control mode (two beeps).
+
+In the serial control mode, the commands are packets of 3 bytes sent in 9600 8N1 idle-high UART (3.3V or 5V) format. You can use an USB-to-TLL serial cable or an Arduino for example. **Do NOT use RS-232 levels !**
+
+* Byte 1: Constant value 0x01.
+* Byte 2: Power, 0 is off, 255 is max. Values below 40 might not make the motor start.
+* Byte 3: Duration in 8ms steps, 0 is the minimum, 254 is max, 255 is infinite duration.
+
+For example [0x01, 0x80, 0x58] means half power for 0.7 seconds.
+
+If you need low speed, kickstart the motor with a higher speed such as 100 for a short duration, then send a lower speed command right after.
 
 ## External connection
 
@@ -50,24 +72,14 @@ Locate the 4 programming points on the PCB:
 
 ![EMW](docs/pcb.jpg)
 
-Connect a SWIM programmer (they're around $4 on eBay) to the annotated points.
-Plug in the EMW. Be careful not to touch the PCB from now on !
-Get ST Visual Programmer from ![https://www.st.com/en/development-tools/stvp-stm8.html](st.com).
-Start STVP, select STLINK as the programmer and STM8S003F3 as the device.
-Go in the OPTION BYTE tab. Make sure ROP is set to OFF, and AFR0 to "Port C6 Alternate Function".
-Hit program, this will reset the protection and wipe the original firmware.
-
-Back in the PROGRAM MEMORY tab, load the appropriate main.ihx file and hit program.
-Disconnect the programmer, unplug the EMW, wait a bit, plug it back in. The new firmware should now be running.
-
-## Usage
-Individually, the "+" and "-" buttons work the same way.
-The speed steps should also be the same as the original ones.
-
-Keeping both the "+" and "-" buttons pushed at the same time will toggle between the regular mode, and the analog-in mode.
-In the analog-in mode, the motor speed is multiplied by the amplitude of the input signal (so the speed adjustment and "off" speed still works).
-
-Enjoy :3
+* Connect a SWIM programmer (they're around $4 on eBay) to the annotated points.
+* Plug in the EMW. Be careful not to touch the PCB from now on !
+* Get ST Visual Programmer from [st.com](https://www.st.com/en/development-tools/stvp-stm8.html).
+* Start STVP, select STLINK as the programmer and STM8S003F3 as the device.
+* Go in the OPTION BYTE tab. Make sure ROP is set to OFF, and AFR0 to "Port C6 Alternate Function".
+* Hit program, this will reset the protection and wipe the original firmware.
+* Back in the PROGRAM MEMORY tab, load the appropriate main.ihx file and hit program.
+* Disconnect the programmer, unplug the EMW, wait a bit, plug it back in. The new firmware should now be running.
 
 ## Disclaimer
 I'm not responsible if you fuck everything up and/or die. Be careful, this isn't your mom's dishwasher.
